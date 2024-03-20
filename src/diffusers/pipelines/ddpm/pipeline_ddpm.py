@@ -110,6 +110,9 @@ class DDPMPipeline(DiffusionPipeline):
         self.scheduler.set_timesteps(num_inference_steps)
 
         for t in self.progress_bar(self.scheduler.timesteps):
+            # scale_model_input
+            image = self.scheduler.scale_model_input(image, t)
+            
             # 1. predict noise model_output
             model_output = self.unet(image, t).sample
 
